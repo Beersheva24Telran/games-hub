@@ -1,16 +1,30 @@
 import { useEffect, useState } from 'react'
 import api from '../services/api-client'
 import { Game, GamesResponse } from '../model/fetch-game-types'
+import { AxiosError } from 'axios'
+import { Text, SimpleGrid } from '@chakra-ui/react'
+import GameCard from './GameCard'
 const GameGrid = () => {
-    const [games, setGames] = useState<Game[]>([])
+    const [games, setGames] = useState<Game[]>([]);
+    const [errorMessage, setErrorMessage] = useState<string>("")
     useEffect(() => {
         api.get<GamesResponse>("/games").then(res => setGames(res.data.results))
+        .catch((error: AxiosError) => setErrorMessage(error.message))
     }, [])
-  return (
-    <ul>
-        {games.map(g => <li key={g.id}>{g.name}</li>)}
-    </ul>
+  return ( <>
+   { errorMessage ? <Text color="red" fontSize={"2.5rem"}>{errorMessage}</Text> :
+    <SimpleGrid maxHeight="85vh" overflow="auto" marginTop= "2vh" columns={
+        {
+            base: 1,
+            sm: 2,
+            md: 3
+        }
+    } gap={5}>
+        {games.map(g => <GameCard key={g.id} game={g}/>)}
+    </SimpleGrid>}
+  </>
   )
+  
 }
 
 export default GameGrid
