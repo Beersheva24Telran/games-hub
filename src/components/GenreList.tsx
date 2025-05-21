@@ -1,21 +1,13 @@
-import { AxiosError } from "axios";
-import { useState, useEffect, FC } from "react";
-import api from "../services/api-client";
-import { Genre, GenresResponse } from "../model/fetch-genre-types";
-import { Text, List, HStack, Avatar, Button } from "@chakra-ui/react";
+import {  FC } from "react";
+import { Text, List, HStack, Avatar, Button, Spinner } from "@chakra-ui/react";
+import useGenre from "../hooks/useGener";
 interface Props {
   onSelectGenre: (genre: string) => void
 }
 const GenreList: FC<Props> = ({onSelectGenre}) => {
-  const [genres, setGenres] = useState<Genre[]>([]);
-  const [errorMessage, setErrorMessage] = useState<string>("");
-  useEffect(() => {
-    api
-      .get<GenresResponse>("/genres")
-      .then((res) => setGenres(res.data.results))
-      .catch((error: AxiosError) => setErrorMessage(error.message));
-  }, []);
-  return (
+ const {data: genres, errorMessage, isLoading} = useGenre();
+ return isLoading? <Spinner></Spinner> : 
+  (
     <>
       {errorMessage ? (
         <Text color="red" fontSize={"2.5rem"}>
