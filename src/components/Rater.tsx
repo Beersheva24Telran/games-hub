@@ -23,7 +23,7 @@ const Rater: FC<Props> = ({ starsNumber = 5, maxRate = 5, rate }) => {
     halfFilledStar: boolean;
     emptyStars: number;
   } {
-    let filledStars = (starsNumber * rate) / maxRate;
+    let filledStars = Math.trunc((starsNumber * rate) / maxRate);
     let halfFilledStar = false;
     const fractionalPart = filledStars - Math.trunc(filledStars);
     if (fractionalPart > 0.75) {
@@ -31,7 +31,7 @@ const Rater: FC<Props> = ({ starsNumber = 5, maxRate = 5, rate }) => {
     } else if (fractionalPart > 0.25) {
       halfFilledStar = true;
     }
-    const emptyStars = starsNumber - filledStars + +!halfFilledStar;
+    const emptyStars = starsNumber - filledStars ;
     return { filledStars, halfFilledStar, emptyStars };
   }
   return <HStack>
