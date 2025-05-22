@@ -15,7 +15,7 @@ const GenreList: FC<Props> = ({onSelectGenre, selectedGenre}) => {
           {errorMessage}
         </Text>
       ) : (
-        <List.Root listStyle="none" maxHeight="85vh" overflow="auto">
+        <List.Root listStyle="none" maxHeight="85vh" overflow="auto" >
           {genres.map((g) => (
             <List.Item key={g.id}>
               <HStack padding={2}>
