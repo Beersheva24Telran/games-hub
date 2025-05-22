@@ -2,11 +2,13 @@ import { Text, SimpleGrid, Spinner } from '@chakra-ui/react'
 import GameCard from './GameCard'
 import useGame from '../hooks/useGame'
 import { FC } from 'react'
+import ParentPlatform from '../model/ParentPlatform';
 interface Props {
-    selectedGenre: string | null
+    selectedGenre: string | null;
+    selectedPlatform: ParentPlatform | null
 }
-const GameGrid: FC<Props> = ({selectedGenre}) => {
-    const {data: games, errorMessage, isLoading} = useGame(selectedGenre);
+const GameGrid: FC<Props> = ({selectedGenre, selectedPlatform}) => {
+    const {data: games, errorMessage, isLoading} = useGame(selectedGenre, selectedPlatform);
         return isLoading ? <Spinner/> : ( <>
    { errorMessage ? <Text color="red" fontSize={"2.5rem"}>{errorMessage}</Text> :
     <SimpleGrid paddingEnd={2} maxHeight="85vh" overflow="auto" marginTop= "2vh" columns={

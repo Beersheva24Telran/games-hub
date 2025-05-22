@@ -1,5 +1,5 @@
 import { HStack } from "@chakra-ui/react";
-import React, { FC, useMemo, ReactNode } from "react";
+import { FC, useMemo, ReactNode } from "react";
 import { FaStarHalfAlt, FaStar, FaRegStar } from 'react-icons/fa'
 interface Props {
   starsNumber?: number;
@@ -23,15 +23,19 @@ const Rater: FC<Props> = ({ starsNumber = 5, maxRate = 5, rate }) => {
     halfFilledStar: boolean;
     emptyStars: number;
   } {
-    let filledStars = Math.trunc((starsNumber * rate) / maxRate);
+    const normStarsNumber= (starsNumber * rate) / maxRate;
+    let totalStars = starsNumber;
+    let filledStars = Math.trunc(normStarsNumber);
     let halfFilledStar = false;
-    const fractionalPart = filledStars - Math.trunc(filledStars);
+    const fractionalPart = normStarsNumber - filledStars;
     if (fractionalPart > 0.75) {
       filledStars++;
     } else if (fractionalPart > 0.25) {
       halfFilledStar = true;
+      totalStars--;
+
     }
-    const emptyStars = starsNumber - filledStars ;
+    const emptyStars = totalStars - filledStars ;
     return { filledStars, halfFilledStar, emptyStars };
   }
   return <HStack>
