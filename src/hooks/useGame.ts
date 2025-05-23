@@ -1,6 +1,6 @@
 import { Game } from "../model/fetch-game-types";
-import ParentPlatform from "../model/ParentPlatform";
+import GameQuery from "../model/GameQuery";
 import useFetchData from "./useFetchData";
-export default function useGame(genreName: string | null, platform: ParentPlatform | null) : {data: Game[], errorMessage:string, isLoading: boolean} {
-    return useFetchData<Game>("/games", {params:{genres: genreName, parent_platforms: platform?.id}}, [genreName, platform] );
+export default function useGame(gameQuery: GameQuery) : {data: Game[], errorMessage:string, isLoading: boolean} {
+    return useFetchData<Game>("/games", {params:{genres: gameQuery.genreName, parent_platforms: gameQuery.platform?.id}}, [gameQuery] );
 }
