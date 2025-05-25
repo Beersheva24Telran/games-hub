@@ -1,4 +1,4 @@
-import { Grid, GridItem, Stack } from "@chakra-ui/react";
+import { Grid, GridItem, Stack, Text } from "@chakra-ui/react";
 import Nav from "./components/Nav";
 import GameGrid from "./components/GameGrid";
 import GanreList from "./components/GenreList";
@@ -16,7 +16,7 @@ function App() {
       }}
     >
       <GridItem area="nav">
-        <Nav></Nav>
+        <Nav searchSubmitter={(text) => setGameQuery({...gameQuery, search:text})}></Nav>
       </GridItem>
       <Stack hideBelow={"md"}>
         <GridItem area="aside" paddingX={5}>
