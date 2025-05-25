@@ -15,7 +15,7 @@ const Sorter: FC<Props> = ({ onSelectOrdering, selectedOrdering}) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   return (
     <>
-          <Menu.Root>
+          <Menu.Root onExitComplete={() => setIsOpen(false)}>
             <Menu.Trigger asChild>
               <Button
                 variant="outline"
