@@ -5,6 +5,7 @@ import GanreList from "./components/GenreList";
 import { useState } from "react";
 import PlatformSelector from "./components/PlatformSelector";
 import GameQuery from "./model/GameQuery";
+import Sorter from "./components/Sorter";
 
 function App() {
   const [gameQuery, setGameQuery] = useState<GameQuery>({} as GameQuery);
@@ -36,6 +37,7 @@ function App() {
           }
           selectedPlatform={gameQuery.platform}
         ></PlatformSelector>
+        <Sorter onSelectOrdering={(option) => setGameQuery({ ...gameQuery, ordering: option })} selectedOrdering={gameQuery.ordering}></Sorter>
         <GameGrid gameQuery={gameQuery} />
       </GridItem>
     </Grid>
