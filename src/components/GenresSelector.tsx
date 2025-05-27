@@ -5,13 +5,11 @@ import { FC, useState } from "react";
 import {easeOut} from 'framer-motion'
 import ComponentMotion from "./ComponentMotion";
 import useGameQuery from "../state-management/store";
-interface Props {
-  
-}
+
 const duration=0.5;
 
 const PlatformSelector: FC = () => {
-  const { errorMessage, isLoading, data: genres } = useGener();
+  const { error, isLoading, data: genres } = useGener();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const selectedGenre = useGameQuery(s => s.gameQuery.genreName);
   const setGenre = useGameQuery(s => s.setGenre)
@@ -20,7 +18,7 @@ const PlatformSelector: FC = () => {
       {isLoading ? (
         <Spinner></Spinner>
       ) : (
-        !errorMessage && (
+        !error && (
           <Menu.Root onExitComplete={() => setIsOpen(false)}>
             <Menu.Trigger asChild>
               <Button
@@ -49,7 +47,7 @@ const PlatformSelector: FC = () => {
                       >
                         Platforms
                       </Menu.Item>
-                      {genres.map((g) => (
+                      {genres?.map((g) => (
                         <Menu.Item
                           key={g.id}
                           onClick={() => {
