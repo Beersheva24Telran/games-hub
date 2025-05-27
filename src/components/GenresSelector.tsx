@@ -4,18 +4,17 @@ import useGener from "../hooks/useGener";
 import { FC, useState } from "react";
 import {easeOut} from 'framer-motion'
 import ComponentMotion from "./ComponentMotion";
+import useGameQuery from "../state-management/store";
 interface Props {
-  selectedGenre: string | null;
-  onSelectGenre: (genre: string | null) => void;
+  
 }
 const duration=0.5;
 
-const PlatformSelector: FC<Props> = ({
-  selectedGenre,
-  onSelectGenre,
-}) => {
+const PlatformSelector: FC = () => {
   const { errorMessage, isLoading, data: genres } = useGener();
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const selectedGenre = useGameQuery(s => s.gameQuery.genreName);
+  const setGenre = useGameQuery(s => s.setGenre)
   return (
     <>
       {isLoading ? (
@@ -43,7 +42,7 @@ const PlatformSelector: FC<Props> = ({
                       <Menu.Item
                         key={"genre"}
                         onClick={() => {
-                          onSelectGenre(null);
+                          setGenre(null);
                           setIsOpen(false);
                         }}
                         value={""}
@@ -54,7 +53,7 @@ const PlatformSelector: FC<Props> = ({
                         <Menu.Item
                           key={g.id}
                           onClick={() => {
-                            onSelectGenre(g.slug);
+                            setGenre(g.slug);
                             setIsOpen(false);
                           }}
                           value={g.slug}

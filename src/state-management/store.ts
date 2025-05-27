@@ -1,8 +1,13 @@
 import { create } from "zustand";
-import GameQuery from "../model/GameQuery";
-import ParentPlatform from "../model/ParentPlatform";
 import { SortOption } from "../components/Sorter";
+import ParentPlatform from "../model/ParentPlatform";
 
+ interface GameQuery {
+    genreName: string | null;
+    platform: ParentPlatform | null;
+    search: string | null,
+    ordering: SortOption | null
+}
 interface GameQueryStore {
     gameQuery: GameQuery;
     setText: (text: string | null) => void;

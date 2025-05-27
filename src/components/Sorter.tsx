@@ -4,15 +4,15 @@ import { FC, useState } from "react";
 import {easeOut} from 'framer-motion';
 import ComponentMotion from "./ComponentMotion";
 import sortOptions from "../../config/sort-config.json"
+import useGameQuery from "../state-management/store";
 export type SortOption = typeof sortOptions[0]
-interface Props {
-  selectedOrdering: SortOption | null;
-  onSelectOrdering: (platform: SortOption | null) => void;
-}
+
 const duration=0.5;
 
-const Sorter: FC<Props> = ({ onSelectOrdering, selectedOrdering}) => {
+const Sorter: FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const selectedOrdering = useGameQuery(s => s.gameQuery.ordering);
+  const setOrdering = useGameQuery(s => s.setOrdering);
   return (
     <>
           <Menu.Root onExitComplete={() => setIsOpen(false)}>
@@ -38,7 +38,7 @@ const Sorter: FC<Props> = ({ onSelectOrdering, selectedOrdering}) => {
                         <Menu.Item
                           key={option.value}
                           onClick={() => {
-                            onSelectOrdering(option);
+                            setOrdering(option);
                             setIsOpen(false);
                           }}
                           value={option.value}
