@@ -18,17 +18,18 @@ interface GameQueryStore {
 }
 const useGameQuery = create<GameQueryStore> (set => ({
     gameQuery: {} as GameQuery,
-    setText: (text: string | null) => set( () => ({
-        gameQuery: {search: text} as GameQuery,
+    setText: (text: string | null) => set( (state) => ({
+        gameQuery: state.gameQuery.search===text ? state.gameQuery :{search: text} as GameQuery,
     })),
-    setGenre: (genreName: string | null) => set ((state) => ({
-        gameQuery: {...state.gameQuery, genreName}
+    setGenre: (genreName: string | null) =>
+         set ((state) => ({
+        gameQuery: state.gameQuery.genreName===genreName ? state.gameQuery : {...state.gameQuery, genreName}
     })),
     setOrdering: (ordering: SortOption | null) => set((state) => ({
-        gameQuery: {...state.gameQuery, ordering}
+        gameQuery: state.gameQuery.ordering?.value===ordering?.value ? state.gameQuery :{...state.gameQuery, ordering}
     })),
     setPlatform: (platform: ParentPlatform | null) => set(state => ({
-        gameQuery: {...state.gameQuery, platform}
+        gameQuery: state.gameQuery.platform?.id===platform?.id ? state.gameQuery :{...state.gameQuery, platform}
     }))
 }))
 export default useGameQuery;

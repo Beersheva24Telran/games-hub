@@ -1,5 +1,4 @@
 import { Game } from "../model/fetch-game-types";
-import GameQuery from "../model/GameQuery";
 import useGameQuery from "../state-management/store";
 import useFetchData from "./useFetchData";
 export default function useGame(): {
