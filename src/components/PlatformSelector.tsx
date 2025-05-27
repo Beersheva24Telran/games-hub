@@ -2,7 +2,6 @@ import { Menu, Button, Portal, Spinner } from "@chakra-ui/react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import usePlatforms from "../hooks/usePlatforms";
 import { FC, useState } from "react";
-import ParentPlatform from "../model/ParentPlatform";
 import {easeOut} from 'framer-motion'
 import ComponentMotion from "./ComponentMotion";
 import useGameQuery from "../state-management/store";
@@ -12,14 +11,14 @@ const duration=0.5;
 const PlatformSelector: FC = () => {
   const selectedPlatform = useGameQuery(s=>s.gameQuery.platform);
   const setPlatform = useGameQuery(s=>s.setPlatform);
-  const { errorMessage, isLoading, data: platforms } = usePlatforms();
+  const { error, isLoading, data: platforms } = usePlatforms();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   return (
     <>
       {isLoading ? (
         <Spinner></Spinner>
       ) : (
-        !errorMessage && (
+        !error && (
           <Menu.Root onExitComplete={() => setIsOpen(false)}>
             <Menu.Trigger asChild>
               <Button
@@ -48,7 +47,7 @@ const PlatformSelector: FC = () => {
                       >
                         Platforms
                       </Menu.Item>
-                      {platforms.map((p) => (
+                      {platforms?.map((p) => (
                         <Menu.Item
                           key={p.id}
                           onClick={() => {
